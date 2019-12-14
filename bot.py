@@ -40,12 +40,12 @@ def checkPats(message,user=0):
             else:
                 return message.channel.send("{0.mention} has {1} pat point!".format(user, json_members.get(str(user.id), 0)))
 
-def pat(message,idString):
+def pat(message, userId):
     time = datetime.now().strftime("[%D %H:%M:%S]")
     try:
-        patee = message.channel.guild.get_member(int(idString))
+        patee = userId
     except:
-        patee = None
+        return
 
     with open("users.json") as json_file:
         try:
@@ -53,84 +53,25 @@ def pat(message,idString):
         except ValueError:
             json_members = {}
 
-    json_members[idString] = json_members.get(idString, 0) + 1
+    json_members[userId.id] = json_members.get(userId.id, 0) + 1
+
 
     with open("users.json", "w") as  outfile:
         json.dump(json_members, outfile)
 
-    if patee != None:
-        print('|'+ time +'| >{0.author} just patted {1}.'.format(message, patee))
-        return message.channel.send('[+1pp] {0.author.mention} pats {1.mention}! (≧ω≦)ԅ( ˘⌣˘)'.format(message, patee))
-    else:
+    if patee == message.author:
         print('|'+ time +'| >{0.author} patted themselves.'.format(message))
-        return message.channel.send('[+1pp] {0.author.mention} patted themselves... (￢_￢;) (つд｀)'.format(message))
-
-def slap(message, idString):
-    time = datetime.now().strftime("[%D %H:%M:%S]")
-    try:
-        patee = message.channel.guild.get_member(int(idString))
-    except:
-        return sendRandomError(message)
-    with open("users.json") as json_file:
-        try:
-            json_members = json.load(json_file)
-        except ValueError:
-            json_members = {}
-
-    json_members[idString] = json_members.get(idString, 0) - 1
-
-    with open("users.json", "w") as  outfile:
-        json.dump(json_members, outfile)
-
-
-    if patee != None:
-        if patee.mention == message.author.mention:
-            ##debug cmd line
-            print('|'+ time +'| >{0.author} just slapped themselves.'.format(message))
-            return message.channel.send('[-1 pp] {0.author.mention} just slapped themselves... (つ✖╭╮✖)   	╮(￣ω￣;)╭'.format(message, patee))
-        else:
-            ##debug
-            print('|'+ time +'| >{0.author} just slapped {1}.'.format(message, patee))
-            return message.channel.send('[-1 pp] {0.author.mention} slaps {1.mention}! ᕦ(ò_óˇ)ᕤ    Σ(°་།°)'.format(message, patee))
+        return message.channel.send('[+1pp] {0.author.mention} patted themselves... \n(￢_￢;) (つд｀)'.format(message))
     else:
-        return sendRandomError(message)
+        print('|'+ time +'| >{0.author} just patted {1}.'.format(message, patee))
+        return message.channel.send('[+1pp] {0.author.mention} pats {1.mention}! \n(≧ω≦)ԅ( ˘⌣˘)'.format(message, patee))
 
-def kick(message, idString):
+def slap(message, userId):
     time = datetime.now().strftime("[%D %H:%M:%S]")
     try:
-        patee = message.channel.guild.get_member(int(idString))
+        patee = userId
     except:
-        return sendRandomError(message)
-    with open("users.json") as json_file:
-        try:
-            json_members = json.load(json_file)
-        except ValueError:
-            json_members = {}
-
-    json_members[idString] = json_members.get(idString, 0) - 3
-
-    with open("users.json", "w") as  outfile:
-        json.dump(json_members, outfile)
-
-
-    if patee != None:
-        if patee.mention == message.author.mention:
-            ##debug cmd line
-            print('|'+ time +'| >{0.author} just kicked themselves.'.format(message))
-            return message.channel.send('[-1 pp] {0.author.mention} just kicked themselves... _:(´ཀ`」 ∠):_     ლ(ಠ_ಠლ) '.format(message, patee))
-        else:
-            ##debug
-            print('|'+ time +'| >{0.author} just kicked {1}. Ouch'.format(message, patee))
-            return message.channel.send('[-3 pp] {0.author.mention} kicks {1.mention}! (ノಠ益ಠ)ノ彡＼＼٩(๑`^´๑)۶／／'.format(message, patee))
-    else:
-        return sendRandomError(message)
-
-def hug(message, idString):
-    time = datetime.now().strftime("[%D %H:%M:%S]")
-    try:
-        patee = message.channel.guild.get_member(int(idString))
-    except:
-        return sendRandomError(message)
+        return
 
     with open("users.json") as json_file:
         try:
@@ -138,30 +79,26 @@ def hug(message, idString):
         except ValueError:
             json_members = {}
 
-    json_members[idString] = json_members.get(idString, 0) + 3
+    json_members[userId.id] = json_members.get(userId.id, 0) - 1
 
     with open("users.json", "w") as  outfile:
         json.dump(json_members, outfile)
 
-
-    if patee != None:
-        if patee.mention == message.author.mention:
-            ##debug cmd line
-            print('|'+ time +'| >{0.author} just hugged themselves.'.format(message))
-            return message.channel.send('[+3pp] {0.author.mention} just hugged themselves...  	(つ . •́ _ʖ •̀ .)つ'.format(message, patee))
-        else:
-            ##debug
-            print('|'+ time +'| >{0.author} just hugged {1}.'.format(message, patee))
-            return message.channel.send('[+3pp] {0.author.mention} hugs {1.mention}!  (づ^-^(^ ^*)つ ♡'.format(message, patee))
+    if patee == message.author:
+        ##debug cmd line
+        print('|'+ time +'| >{0.author} just slapped themselves.'.format(message))
+        return message.channel.send('[-1 pp] {0.author.mention} just slapped themselves... \n(つ✖╭╮✖)   	╮(￣ω￣;)╭'.format(message, patee))
     else:
-        return sendRandomError(message)
+        ##debug
+        print('|'+ time +'| >{0.author} just slapped {1}.'.format(message, patee))
+        return message.channel.send('[-1 pp] {0.author.mention} slaps {1.mention}! \nᕦ(ò_óˇ)ᕤ    Σ(°་།°)'.format(message, patee))
 
-def sesh(message, idString):
+def kick(message, userId):
     time = datetime.now().strftime("[%D %H:%M:%S]")
     try:
-        patee = message.channel.guild.get_member(int(idString))
+        patee = userId
     except:
-        return sendRandomError(message)
+        return
 
     with open("users.json") as json_file:
         try:
@@ -169,22 +106,75 @@ def sesh(message, idString):
         except ValueError:
             json_members = {}
 
-    json_members[idString] = json_members.get(idString, 0) + 10
+    json_members[userId.id] = json_members.get(userId.id, 0) - 3
 
     with open("users.json", "w") as  outfile:
         json.dump(json_members, outfile)
 
-    if patee != None:
-        if patee.mention == message.author.mention:
-            ##debug cmd line
-            print('|'+ time +'| >{0.author} just seshed alone.'.format(message))
-            return message.channel.send('[+10pp] {0.author.mention} just seshed alone.  ౦０o ｡ (‾́。‾́  )y~~'.format(message, patee))
-        else:
-            ##debug
-            print('|'+ time +'| >{0.author} just hugged {1}.'.format(message, patee))
-            return message.channel.send('[+10pp] {0.author.mention} seshes with {1.mention}! ( ≖ ͜ʖ≖)౦０౦０o ｡(°ε° )y~~'.format(message, patee))
+
+    if patee == message.author:
+        ##debug cmd line
+        print('|'+ time +'| >{0.author} just kicked themselves.'.format(message))
+        return message.channel.send('[-3 pp] {0.author.mention} just kicked themselves... \n_:(´ཀ`」 ∠):_     ლ(ಠ_ಠლ) '.format(message, patee))
     else:
-        return sendRandomError(message)
+        ##debug
+        print('|'+ time +'| >{0.author} just kicked {1}. Ouch'.format(message, patee))
+        return message.channel.send('[-3 pp] {0.author.mention} kicks {1.mention}! \n(ノಠ益ಠ)ノ彡＼＼٩(๑`^´๑)۶／／'.format(message, patee))
+
+def hug(message, userId):
+    time = datetime.now().strftime("[%D %H:%M:%S]")
+    try:
+        patee = userId
+    except:
+        return
+
+    with open("users.json") as json_file:
+        try:
+            json_members = json.load(json_file)
+        except ValueError:
+            json_members = {}
+
+    json_members[userId.id] = json_members.get(userId.id, 0) + 3
+
+    with open("users.json", "w") as  outfile:
+        json.dump(json_members, outfile)
+
+    if patee == message.author:
+        ##debug cmd line
+        print('|'+ time +'| >{0.author} just hugged themselves.'.format(message))
+        return message.channel.send('[+3pp] {0.author.mention} just hugged themselves...  \n(つ . •́ _ʖ •̀ .)つ'.format(message, patee))
+    else:
+        ##debug
+        print('|'+ time +'| >{0.author} just hugged {1}.'.format(message, patee))
+        return message.channel.send('[+3pp] {0.author.mention} hugs {1.mention}! \n (づ^-^(^ ^*)つ ♡'.format(message, patee))
+
+
+def sesh(message, userId):
+    time = datetime.now().strftime("[%D %H:%M:%S]")
+    try:
+        patee = userId
+    except:
+        return
+
+    with open("users.json") as json_file:
+        try:
+            json_members = json.load(json_file)
+        except ValueError:
+            json_members = {}
+
+    json_members[userId.id] = json_members.get(userId.id, 0) + 10
+
+    with open("users.json", "w") as  outfile:
+        json.dump(json_members, outfile)
+
+    if patee.mention == message.author.mention:
+        ##debug cmd line
+        print('|'+ time +'| >{0.author} just seshed alone.'.format(message))
+        return message.channel.send('[+10pp] {0.author.mention} just seshed alone. \n ౦０o ｡ (‾́。‾́  )y~~'.format(message, patee))
+    else:
+        ##debug
+        print('|'+ time +'| >{0.author} just hugged {1}.'.format(message, patee))
+        return message.channel.send('[+10pp] {0.author.mention} seshes with {1.mention}! \n ( ≖ ͜ʖ≖)౦０౦０o ｡(°ε° )y~~'.format(message, patee))
 
 #TODO convert to commaands
 
@@ -198,54 +188,48 @@ async def on_message(message):
         return
 
     args = message.content.split(' ')
-    try:
-        idString = re.sub("[^0-9]", "", args[1]) or None
-    except:
-        return
+    userId = message.mentions[0] if 0 < len(message.mentions) else message.author
+
+    #if an argument is present, assign target to user. If not, assign target to sender of message.
 
     if message.content.startswith('%pats'):
-        if len(args) == 1:
-            await checkPats(message)
-            return
-
         try:
-            user = message.channel.guild.get_member(int(idString))
-            await checkPats(message,user)
+            await checkPats(message,userId)
             return
         except:
             await sendRandomError(message)
             return
     elif message.content.startswith('%pat'):
         try:
-            await pat(message, idString or None)
+            await pat(message, userId)
             return
         except:
             await sendRandomError(message)
             return
     elif message.content.startswith('%slap'):
         try:
-            await slap(message, idString or None)
+            await slap(message, userId)
             return
         except:
             await sendRandomError(message)
             return
     elif message.content.startswith('%hug'):
         try:
-            await hug(message, idString or None)
+            await hug(message, userId)
             return
         except:
             await sendRandomError(message)
             return
     elif message.content.startswith('%kick'):
         try:
-            await kick(message, idString or None)
+            await kick(message, userId)
             return
         except:
             await sendRandomError(message)
             return
     elif message.content.startswith('%sesh'):
         try:
-            await sesh(message, idString or None)
+            await sesh(message, userId)
             return
         except:
             await sendRandomError(message)
