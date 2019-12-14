@@ -200,7 +200,7 @@ async def on_message(message):
         args = message.content.split(' ')
         idString = re.sub("[^0-9]", "", args[1])
     except:
-        sendError(message)
+        await sendError(message)
         pass
 
     if message.content.startswith('%pats'):
