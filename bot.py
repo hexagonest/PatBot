@@ -12,7 +12,10 @@ async def on_ready():
     print('|'+ time +'|-[hexadecimalbot] patBot online.')
 
 def sendRandomError(message):
-    return message.channel.send(["ono i don't know what to do!","owo what is happening?","u-u that's not right...","unu i'm not happy with the look of this... ","q.q why is this so hard?","owo ... i don't know what to do... don't look at me like that!"][random.randint(0,5)])
+    return message.channel.send([" 	(⁄ ⁄•⁄ω⁄•⁄ ⁄) i don't know what to do!"," 	(⁄ ⁄•⁄ω⁄•⁄ ⁄) what is happening?","(*/ω＼) that's not right..."," 	☆ｏ(＞＜；)○ i'm not happy with the look of this... ","(ᗒᗣᗕ)՞ why is this so hard?","(＃＞＜) ... i don't know what to do... don't look at me like that!"][random.randint(0,5)])
+
+def randomFace():
+    return ["\n⁽⁽◝( • ω • )◜⁾⁾","\n└(＾＾)┐","\n(~‾▽‾)~","\n ヽ( ⌒o⌒)人(⌒-⌒ )ﾉ","\n＼(＾▽＾)／","\n☆ ～('▽^人)","\nヽ(・∀・)ﾉ"][random.randint(0,6)]
 
 def checkPats(message,user=0):
     time = datetime.now().strftime("[%D %H:%M:%S]")
@@ -24,9 +27,9 @@ def checkPats(message,user=0):
             except ValueError:
                 json_members = {}
             if(json_members.get(str(message.author.id), 0) != 1):
-                return message.channel.send("{0.author.mention}, you have {1} pat points!".format(message, json_members.get(str(message.author.id), 0)))
+                return message.channel.send("{0.author.mention}, you have {1} pat points! {2}".format(message, json_members.get(str(message.author.id), 0), randomFace()))
             else:
-                return message.channel.send("{0.author.mention}, you have {1} pat point!".format(message, json_members.get(str(message.author.id), 0)))
+                return message.channel.send("{0.author.mention}, you have {1} pat point! {2}".format(message, json_members.get(str(message.author.id), 0), randomFace()))
     else:
         #print(user)
         print("|"+ time +"| >{0.author} just checked {1}'s pat points.".format(message, user))
@@ -36,9 +39,9 @@ def checkPats(message,user=0):
             except ValueError:
                 json_members = {}
             if(json_members.get(str(message.author.id), 0) != 1):
-                return message.channel.send("{0.mention} has {1} pat points!".format(user, json_members.get(str(user.id), 0)))
+                return message.channel.send("{0.mention} has {1} pat points! {2}".format(user, json_members.get(str(user.id), 0), randomFace()))
             else:
-                return message.channel.send("{0.mention} has {1} pat point!".format(user, json_members.get(str(user.id), 0)))
+                return message.channel.send("{0.mention} has {1} pat point! {2}".format(user, json_members.get(str(user.id), 0), randomFace()))
 
 def pat(message, userId):
     time = datetime.now().strftime("[%D %H:%M:%S]")
