@@ -56,7 +56,7 @@ def pat(message, userId):
         except ValueError:
             json_members = {}
 
-    json_members[userId.id] = json_members.get(userId.id, 0) + 1
+    json_members[userId.id] = json_members.get(str(userId.id), 0) + 1
 
 
     with open("users.json", "w") as  outfile:
@@ -82,7 +82,7 @@ def slap(message, userId):
         except ValueError:
             json_members = {}
 
-    json_members[userId.id] = json_members.get(userId.id, 0) - 1
+    json_members[userId.id] = json_members.get(str(userId.id), 0) - 1
 
     with open("users.json", "w") as  outfile:
         json.dump(json_members, outfile)
@@ -109,7 +109,7 @@ def kick(message, userId):
         except ValueError:
             json_members = {}
 
-    json_members[userId.id] = json_members.get(userId.id, 0) - 3
+    json_members[userId.id] = json_members.get(str(userId.id), 0) - 3
 
     with open("users.json", "w") as  outfile:
         json.dump(json_members, outfile)
@@ -137,7 +137,7 @@ def hug(message, userId):
         except ValueError:
             json_members = {}
 
-    json_members[userId.id] = json_members.get(userId.id, 0) + 3
+    json_members[userId.id] = json_members.get(str(userId.id), 0) + 3
 
     with open("users.json", "w") as  outfile:
         json.dump(json_members, outfile)
@@ -165,7 +165,7 @@ def sesh(message, userId):
         except ValueError:
             json_members = {}
 
-    json_members[userId.id] = json_members.get(userId.id, 0) + 10
+    json_members[userId.id] = json_members.get(str(userId.id), 0) + 10
 
     with open("users.json", "w") as  outfile:
         json.dump(json_members, outfile)
