@@ -11,6 +11,9 @@ async def on_ready():
     time = datetime.now().strftime("[%D %H:%M:%S]")
     print('|'+ time +'|-[hexadecimalbot] patBot online.')
 
+def sendError(message):
+    return message.channel.send("%pat @mention uwu")
+
 def sendRandomError(message):
     return message.channel.send(["ono i don't know what to do!","owo what is happening?","u-u that's not right...","unu i'm not happy with the look of this... ","q.q why is this so hard?","owo ... i don't know what to do... don't look at me like that!"][random.randint(0,5)])
 
@@ -45,7 +48,7 @@ def pat(message,idString):
     try:
         patee = message.channel.guild.get_member(int(idString))
     except:
-        return sendRandomError(message)
+        patee = None
 
     with open("users.json") as json_file:
         try:
@@ -59,16 +62,11 @@ def pat(message,idString):
         json.dump(json_members, outfile)
 
     if patee != None:
-        if patee.mention == message.author.mention:
-            ##debug to command line
-            print('|'+ time +'| >{0.author} patted themselves.'.format(message))
-            return message.channel.send('[+1pp] {0.author.mention} patted themselves... owo'.format(message, patee))
-        else:
-            ##debug to command line
-            print('|'+ time +'| >{0.author} just patted {1}.'.format(message, patee))
-            return message.channel.send('[+1pp] {0.author.mention} pats {1.mention}!'.format(message, patee))
+        print('|'+ time +'| >{0.author} just patted {1}.'.format(message, patee))
+        return message.channel.send('[+1pp] {0.author.mention} pats {1.mention}! (≧ω≦)ԅ( ˘⌣˘)'.format(message, patee))
     else:
-        return sendRandomError(message)
+        print('|'+ time +'| >{0.author} patted themselves.'.format(message))
+        return message.channel.send('[+1pp] {0.author.mention} patted themselves... (￢_￢;) (つд｀)'.format(message))
 
 def slap(message, idString):
     time = datetime.now().strftime("[%D %H:%M:%S]")
@@ -92,11 +90,11 @@ def slap(message, idString):
         if patee.mention == message.author.mention:
             ##debug cmd line
             print('|'+ time +'| >{0.author} just slapped themselves.'.format(message))
-            return message.channel.send('[-1 pp] {0.author.mention} just slapped themselves... owo'.format(message, patee))
+            return message.channel.send('[-1 pp] {0.author.mention} just slapped themselves... (つ✖╭╮✖)   	╮(￣ω￣;)╭'.format(message, patee))
         else:
             ##debug
             print('|'+ time +'| >{0.author} just slapped {1}.'.format(message, patee))
-            return message.channel.send('[-1 pp] {0.author.mention} slaps {1.mention}!'.format(message, patee))
+            return message.channel.send('[-1 pp] {0.author.mention} slaps {1.mention}! ᕦ(ò_óˇ)ᕤ    Σ(°་།°)'.format(message, patee))
     else:
         return sendRandomError(message)
 
@@ -122,14 +120,13 @@ def kick(message, idString):
         if patee.mention == message.author.mention:
             ##debug cmd line
             print('|'+ time +'| >{0.author} just kicked themselves.'.format(message))
-            return message.channel.send('[-1 pp] {0.author.mention} just kicked themselves... owo'.format(message, patee))
+            return message.channel.send('[-1 pp] {0.author.mention} just kicked themselves... _:(´ཀ`」 ∠):_     ლ(ಠ_ಠლ) '.format(message, patee))
         else:
             ##debug
             print('|'+ time +'| >{0.author} just kicked {1}. Ouch'.format(message, patee))
-            return message.channel.send('[-3 pp] {0.author.mention} kicks {1.mention}! Ouch...'.format(message, patee))
+            return message.channel.send('[-3 pp] {0.author.mention} kicks {1.mention}! (ノಠ益ಠ)ノ彡＼＼٩(๑`^´๑)۶／／'.format(message, patee))
     else:
         return sendRandomError(message)
-
 
 def hug(message, idString):
     time = datetime.now().strftime("[%D %H:%M:%S]")
@@ -154,11 +151,11 @@ def hug(message, idString):
         if patee.mention == message.author.mention:
             ##debug cmd line
             print('|'+ time +'| >{0.author} just hugged themselves.'.format(message))
-            return message.channel.send('[+3pp] {0.author.mention} just hugged themselves... owo'.format(message, patee))
+            return message.channel.send('[+3pp] {0.author.mention} just hugged themselves...  	(つ . •́ _ʖ •̀ .)つ'.format(message, patee))
         else:
             ##debug
             print('|'+ time +'| >{0.author} just hugged {1}.'.format(message, patee))
-            return message.channel.send('[+3pp] {0.author.mention} hugs {1.mention}! uwu'.format(message, patee))
+            return message.channel.send('[+3pp] {0.author.mention} hugs {1.mention}!  (づ^-^(^ ^*)つ ♡'.format(message, patee))
     else:
         return sendRandomError(message)
 
@@ -180,16 +177,15 @@ def sesh(message, idString):
     with open("users.json", "w") as  outfile:
         json.dump(json_members, outfile)
 
-
     if patee != None:
         if patee.mention == message.author.mention:
             ##debug cmd line
             print('|'+ time +'| >{0.author} just seshed alone.'.format(message))
-            return message.channel.send('[+10pp] {0.author.mention} just seshed alone. owo'.format(message, patee))
+            return message.channel.send('[+10pp] {0.author.mention} just seshed alone.  ౦０o ｡ (‾́。‾́  )y~~'.format(message, patee))
         else:
             ##debug
             print('|'+ time +'| >{0.author} just hugged {1}.'.format(message, patee))
-            return message.channel.send('[+10pp] {0.author.mention} seshes with {1.mention}! uwu Weed-san!!'.format(message, patee))
+            return message.channel.send('[+10pp] {0.author.mention} seshes with {1.mention}! ( ≖ ͜ʖ≖)౦０౦０o ｡(°ε° )y~~'.format(message, patee))
     else:
         return sendRandomError(message)
 
@@ -204,55 +200,53 @@ async def on_message(message):
         args = message.content.split(' ')
         idString = re.sub("[^0-9]", "", args[1])
     except:
+        sendError(message)
         pass
+
     if message.content.startswith('%pats'):
-        if len(args) > 1:
-            #search pats of user
-            try:
-                user = message.channel.guild.get_member(int(idString))
-                await checkPats(message,user)
-                return
-            except:
-                await sendRandomError(message)
-                return
-        else:
+        if len(args) == 1:
             await checkPats(message)
             return
-            ##debug to command line
-    if message.content.startswith('%pat ') != True:
+
         try:
-            #slap?
-            if message.content.startswith('%slap '):
-                await slap(message, idString)
-                return
+            user = message.channel.guild.get_member(int(idString))
+            await checkPats(message,user)
+            return
         except:
             await sendRandomError(message)
             return
+
+    if message.content.startswith('%pat'):
         try:
-            #hug?
-            if message.content.startswith('%hug '):
-                await hug(message, idString)
-                return
+            await pat(message, idString = None)
+            return
         except:
             await sendRandomError(message)
             return
+    if message.content.startswith('%slap'):
         try:
-            if message.content.startswith('%kick '):
-                await kick(message, idString)
-                return
+            await slap(message, idString = None)
+            return
         except:
             await sendRandomError(message)
             return
+    if message.content.startswith('%hug'):
         try:
-            if message.content.startswith('%sesh '):
-                await sesh(message, idString)
-                return
+            await hug(message, idString = None)
+            return
         except:
             await sendRandomError(message)
             return
-    else:
+    else if message.content.startswith('%kick'):
         try:
-            await pat(message, idString)
+            await kick(message, idString = None)
+            return
+        except:
+            await sendRandomError(message)
+            return
+    elif message.content.startswith('%sesh'):
+        try:
+            await sesh(message, idString = None)
             return
         except:
             await sendRandomError(message)
