@@ -11,9 +11,6 @@ async def on_ready():
     time = datetime.now().strftime("[%D %H:%M:%S]")
     print('|'+ time +'|-[hexadecimalbot] patBot online.')
 
-def sendError(message):
-    return message.channel.send("%pat @mention uwu")
-
 def sendRandomError(message):
     return message.channel.send(["ono i don't know what to do!","owo what is happening?","u-u that's not right...","unu i'm not happy with the look of this... ","q.q why is this so hard?","owo ... i don't know what to do... don't look at me like that!"][random.randint(0,5)])
 
@@ -196,12 +193,15 @@ def sesh(message, idString):
 async def on_message(message):
     if message.author == client.user:
         return
+
+    if not message.content.startswith('%'):
+        return
+
+    args = message.content.split(' ')
     try:
-        args = message.content.split(' ')
-        idString = re.sub("[^0-9]", "", args[1])
+        idString = re.sub("[^0-9]", "", args[1]) or None
     except:
-        await sendError(message)
-        pass
+        return
 
     if message.content.startswith('%pats'):
         if len(args) == 1:
@@ -217,35 +217,35 @@ async def on_message(message):
             return
     elif message.content.startswith('%pat'):
         try:
-            await pat(message, idString = None)
+            await pat(message, idString or None)
             return
         except:
             await sendRandomError(message)
             return
     elif message.content.startswith('%slap'):
         try:
-            await slap(message, idString = None)
+            await slap(message, idString or None)
             return
         except:
             await sendRandomError(message)
             return
     elif message.content.startswith('%hug'):
         try:
-            await hug(message, idString = None)
+            await hug(message, idString or None)
             return
         except:
             await sendRandomError(message)
             return
     elif message.content.startswith('%kick'):
         try:
-            await kick(message, idString = None)
+            await kick(message, idString or None)
             return
         except:
             await sendRandomError(message)
             return
     elif message.content.startswith('%sesh'):
         try:
-            await sesh(message, idString = None)
+            await sesh(message, idString or None)
             return
         except:
             await sendRandomError(message)
