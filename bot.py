@@ -215,29 +215,28 @@ async def on_message(message):
         except:
             await sendRandomError(message)
             return
-
-    if message.content.startswith('%pat'):
+    elif message.content.startswith('%pat'):
         try:
             await pat(message, idString = None)
             return
         except:
             await sendRandomError(message)
             return
-    if message.content.startswith('%slap'):
+    elif message.content.startswith('%slap'):
         try:
             await slap(message, idString = None)
             return
         except:
             await sendRandomError(message)
             return
-    if message.content.startswith('%hug'):
+    elif message.content.startswith('%hug'):
         try:
             await hug(message, idString = None)
             return
         except:
             await sendRandomError(message)
             return
-    else if message.content.startswith('%kick'):
+    elif message.content.startswith('%kick'):
         try:
             await kick(message, idString = None)
             return
