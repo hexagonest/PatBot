@@ -8,7 +8,8 @@ client=discord.Client(fetch_offline_members=True)
 
 #dunno what to do with this method lol, doesn't work when declared inside the class
 def randomFace():
-    return ["\n⁽⁽◝( • ω • )◜⁾⁾","\n└(＾＾)┐","\n(~‾▽‾)~","\n ヽ( ⌒o⌒)人(⌒-⌒ )ﾉ","\n＼(＾▽＾)／","\n☆ ～('▽^人)","\nヽ(・∀・)ﾉ"][random.randint(0,6)]
+    faces = ["\n ヽ(~_~(・_・ )ゝ""\n⁽⁽◝( • ω • )◜⁾⁾","\n└(＾＾)┐","\n(~‾▽‾)~","\n ヽ( ⌒o⌒)人(⌒-⌒ )ﾉ","\n＼(＾▽＾)／","\n☆ ～('▽^人)","\nヽ(・∀・)ﾉ"]
+    return faces[random.randint(0,len(faces))]
 
 class PatBot:
     def sendRandomError(self,message):
@@ -87,7 +88,7 @@ class PatBot:
         if patee == message.author:
             ##debug cmd line
             print('|'+ time +'| >{0.author} just slapped themselves.'.format(message))
-            return message.channel.send('[-1 pp] {0.author.mention} just slapped themselves... \n(つ✖╭╮✖)   	╮(￣ω￣;)╭'.format(message, patee))
+            return message.channel.send('[-1 pp] {0.author.mention} just slapped themselves... \n(つ✖╭╮✖)   	╮(￣ω￣;)╭'.format(message))
         else:
             ##debug
             print('|'+ time +'| >{0.author} just slapped {1}.'.format(message, patee))
@@ -115,7 +116,7 @@ class PatBot:
         if patee == message.author:
             ##debug cmd line
             print('|'+ time +'| >{0.author} just kicked themselves.'.format(message))
-            return message.channel.send('[-3 pp] {0.author.mention} just kicked themselves... \n_:(´ཀ`」 ∠):_     ლ(ಠ_ಠლ) '.format(message, patee))
+            return message.channel.send('[-3 pp] {0.author.mention} just kicked themselves... \n_:(´ཀ`」 ∠):_     ლ(ಠ_ಠლ) '.format(message))
         else:
             ##debug
             print('|'+ time +'| >{0.author} just kicked {1}. Ouch'.format(message, patee))
@@ -142,7 +143,7 @@ class PatBot:
         if patee == message.author:
             ##debug cmd line
             print('|'+ time +'| >{0.author} just hugged themselves.'.format(message))
-            return message.channel.send('[+3pp] {0.author.mention} just hugged themselves...  \n(つ . •́ _ʖ •̀ .)つ'.format(message, patee))
+            return message.channel.send('[+3pp] {0.author.mention} just hugged themselves...  \n(つ . •́ _ʖ •̀ .)つ'.format(message))
         else:
             ##debug
             print('|'+ time +'| >{0.author} just hugged {1}.'.format(message, patee))
@@ -170,11 +171,50 @@ class PatBot:
         if patee.mention == message.author.mention:
             ##debug cmd line
             print('|'+ time +'| >{0.author} just seshed alone.'.format(message))
-            return message.channel.send('[+10pp] {0.author.mention} just seshed alone. \n ౦０o ｡ (‾́。‾́  )y~~'.format(message, patee))
+            return message.channel.send('[+10pp] {0.author.mention} just seshed alone. \n ౦０o ｡ (‾́。‾́  )y~~'.format(message))
         else:
             ##debug
             print('|'+ time +'| >{0.author} just hugged {1}.'.format(message, patee))
             return message.channel.send('[+10pp] {0.author.mention} seshes with {1.mention}! \n ( ≖ ͜ʖ≖)౦０౦０o ｡(°ε° )y~~'.format(message, patee))
+
+    def mlem(self, message, userId):
+        time = datetime.now().strftime("[%D %H:%M:%S]")
+        try:
+            patee = userId
+        except:
+            return
+
+        with open("users.json") as json_file:
+            try:
+                json_members = json.load(json_file)
+            except ValueError:
+                json_members = {}
+
+        json_members[userId.id] = json_members.get(str(userId.id), 0) + 1
+
+        with open("users.json", "w") as  outfile:
+            json.dump(json_members, outfile)
+
+        if patee.mention == message.author.mention:
+            ##debug cmd line
+            print('|'+ time +'| >{0.author} just mlemed.'.format(message))
+            return message.channel.send('[+1pp] {0.author.mention} mlems\n (≧ڡ≦*)'.format(message))
+        else:
+            ##debug
+            print('|'+ time +'| >{0.author} just mlemed {1}.'.format(message, patee))
+            return message.channel.send('[+1pp] {0.author.mention} mlems at {1.mention}!\n  (ˆڡˆ)｡⌒☆(´ ω `)'.format(message, patee))
+
+    def muang(self, message, userId):
+        time = datetime.now().strftime("[%D %H:%M:%S]")
+        try:
+            patee = userId
+        except:
+            return
+
+        if patee.mention == message.author.mention:
+            ##debug cmd line
+            print('|'+ time +'| >{0.author} muang'.format(message))
+            return message.channel.send('muang! \n (^=◕ᴥ◕=^) V●ᴥ●V muang!'.format(message))
 
     #TODO convert to commaands
 
@@ -237,6 +277,20 @@ async def on_message(message):
     elif message.content.startswith('%sesh'):
         try:
             await patbot.sesh(message, userId)
+            return
+        except:
+            await patbot.sendRandomError(message)
+            return
+    elif message.content.startswith('%mlem'):
+        try:
+            await patbot.mlem(message, userId)
+            return
+        except:
+            await patbot.sendRandomError(message)
+            return
+    elif message.content.startswith('%muang'):
+        try:
+            await patbot.muang(message, userId)
             return
         except:
             await patbot.sendRandomError(message)
