@@ -71,7 +71,6 @@ class PatBot:
         else:
             self.logMessage('{0.author} just slapped {1}.'.format(message, userId))
             return self.sendMessage(message, userId, '[-1 pp] {0.author.mention} slaps {1.mention}! \nᕦ(ò_óˇ)ᕤ    Σ(°་།°)'.format(message, userId))
-        return
 
     def kick(self, message, userId):
         self.updatePatCount(message, userId, -3) #1 means +1 on the patcount of the target user.
@@ -82,7 +81,6 @@ class PatBot:
         else:
             self.logMessage('{0.author} just kicked {1}.'.format(message, userId))
             return self.sendMessage(message, userId, '[-3 pp] {0.author.mention} kicks {1.mention}! \n(ノಠ益ಠ)ノ彡＼＼٩(๑`^´๑)۶／／'.format(message, userId))
-        return
 
     def hug(self, message, userId):
         self.updatePatCount(message, userId, 3) #1 means +1 on the patcount of the target user.
@@ -93,7 +91,6 @@ class PatBot:
         else:
             self.logMessage('{0.author} just hugged {1}.'.format(message, userId))
             return self.sendMessage(message, userId, '[+3pp] {0.author.mention} hugs {1.mention}! \n (づ^-^(^ ^*)つ ♡'.format(message, userId))
-        return
 
     def sesh(self, message, userId):
         self.updatePatCount(message, userId, 10) #1 means +1 on the patcount of the target user.
@@ -104,7 +101,6 @@ class PatBot:
         else:
             self.logMessage('{0.author} just seshed with {1}.'.format(message, userId))
             return self.sendMessage(message, userId, '[+10pp] {0.author.mention} seshes with {1.mention}! \n ( ≖ ͜ʖ≖)౦０౦０o ｡(°ε° )y~~'.format(message, userId))
-        return
 
     def mlem(self, message, userId):
         self.updatePatCount(message, userId, 15) #1 means +1 on the patcount of the target user.
@@ -115,7 +111,6 @@ class PatBot:
         else:
             self.logMessage('{0.author} just mlemed at {1}.'.format(message, userId))
             return self.sendMessage(message, userId, '[+15pp] {0.author.mention} mlems at {1.mention}!\n  (ˆڡˆ)｡⌒☆(´ ω `)'.format(message, userId))
-        return
 
     def muang(self, message, userId):
         if userId == message.author:
@@ -141,12 +136,12 @@ async def on_message(message):
     #if an argument is present, assign target to user. If not, assign target to sender of message.
 
     if message.content.startswith('%pats'):
-        #try:
+        try:
             await patbot.checkPats(message,userId)
             return
-        #except:
-        #    await patbot.sendRandomError(message)
-        #    return
+        except:
+            await patbot.sendRandomError(message)
+            return
     elif message.content.startswith('%pat'):
         try:
             await patbot.pat(message, userId)
